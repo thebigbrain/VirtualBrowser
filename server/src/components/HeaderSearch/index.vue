@@ -26,8 +26,8 @@
 // fuse is a lightweight fuzzy-search module
 // make search results more in line with expectations
 import Fuse from 'fuse.js'
-import path from 'path'
 import i18n from '@/lang'
+import router from '@/router'
 
 export default {
   name: 'HeaderSearch',
@@ -148,7 +148,7 @@ export default {
           continue
         }
         const data = {
-          path: path.resolve(basePath, router.path),
+          path: router.resolve(basePath, router.path),
           title: [...prefixTitle]
         }
         if (router.meta && router.meta.title) {

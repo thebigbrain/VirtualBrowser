@@ -4,12 +4,15 @@ import Cookies from 'js-cookie'
 
 import 'normalize.css/normalize.css' // a modern alternative to CSS resets
 
-import Element from 'element-ui'
+import ElementPlus from 'element-plus'
+import 'element-plus/dist/index.css'
 import './styles/element-variables.scss'
 
 import '@/styles/index.scss' // global css
 
-import App from './App'
+import App from './App.vue'
+import SvgIcon from './components/SvgIcon/index.vue' // svg component
+
 import store from './store'
 import router from './router'
 
@@ -19,6 +22,7 @@ import './permission' // permission control
 import './utils/error-log' // error log
 
 import * as filters from './filters' // global filters
+import { createApp } from 'vue'
 
 /**
  * If you don't want to use mock-server
@@ -32,24 +36,14 @@ if (process.env.NODE_ENV === 'production') {
   const { mockXHR } = require('../mock')
   mockXHR()
 }
+const app = createApp(App)
 
-Vue.use(Clipboard)
-Vue.use(Element, {
-  size: localStorage.getItem('size') || 'mini', // set element-ui default size
-  i18n: (key, value) => i18n.t(key, value)
-})
+app.use(Clipboard)
+app.use(ElementPlus)
+app.use(i18n)
+app.use(store)
+app.use(router)
 
-// register global utility filters
-Object.keys(filters).forEach(key => {
-  Vue.filter(key, filters[key])
-})
+app.component('SvgIcon', SvgIcon)
 
-Vue.config.productionTip = false
-
-new Vue({
-  el: '#app',
-  router,
-  store,
-  i18n,
-  render: h => h(App)
-})
+app.mount('#app')

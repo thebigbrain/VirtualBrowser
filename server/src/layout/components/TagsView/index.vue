@@ -32,9 +32,10 @@
 </template>
 
 <script>
+import router from '@/router'
 import ScrollPane from './ScrollPane'
 import { generateTitle } from '@/utils/i18n'
-import path from 'path'
+// import path from 'path'
 
 export default {
   components: { ScrollPane },
@@ -84,7 +85,7 @@ export default {
       let tags = []
       routes.forEach(route => {
         if (route.meta && route.meta.affix) {
-          const tagPath = path.resolve(basePath, route.path)
+          const tagPath = router.resolve(basePath, route.path)
           tags.push({
             fullPath: tagPath,
             path: tagPath,
